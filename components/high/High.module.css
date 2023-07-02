@@ -1,0 +1,21 @@
+.highContainer {
+    background-color: #1E213A;
+    color: #E7E7EB;
+    font-family: 'Raleway', sans-serif;
+    width: 90vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.highContainer span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.highContainer h1 {
+    font-size: 64px;
+    font-weight: 700;
+}

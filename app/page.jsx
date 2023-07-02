@@ -1,15 +1,52 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import Card from '@/components/Card'
+import Card from '@/components/card/Card'
+import High from '@/components/high/High'
+import { useState } from 'react'
 
 export default function Home() {
+
+  const [botonState, setBotonState] = useState(false)
+
+  function showSearch() {
+    setBotonState(!botonState)
+  }
+
   return (
     <>
       <section className={styles.secPrincipal}>
         <div className={styles.boton_Ubicacion}>
-          <button type='button' className={styles.botonSearch}>
-            Search for places
-          </button>
+          {
+          botonState ? 
+          <div className={styles.searchContainer}>
+            <div className={styles.close}>
+              <Image
+                src={'/close_FILL0_wght400_GRAD0_opsz48.svg'}
+                width={30}
+                height={30}
+                alt='close'
+                onClick={showSearch}
+              />
+            </div>
+            <div className={styles.searchAndButton}>
+              <div className={styles.searchLocationContainer}>
+                <Image
+                  src={'/search_FILL0_wght400_GRAD0_opsz48.svg'}
+                  width={24}
+                  height={24}
+                  alt='search'
+                />
+                <input className={styles.searchLocation} type="text" placeholder='search location' />
+              </div>
+              <button type='button'>Search</button>
+            </div>
+          </div>
+          :
+            <button type='button' className={styles.botonSearch} onClick={showSearch}>
+              Search for places
+            </button>
+          }
           <div className={styles.imgContainer}>
             <Image
               src={'/my_location_FILL1_wght400_GRAD0_opsz48.svg'}
@@ -48,11 +85,21 @@ export default function Home() {
 
 
       <section className={styles.secCards}>
-      <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
       </section>
 
       <section className={styles.secHigh}>
-      <h4>Today’s Hightlights</h4>
+        <h4>Today&#8217;s Hightlights</h4>
+        <div className={styles.highCards}>
+          <High />
+          <High />
+          <High />
+          <High />
+        </div>
       </section>
     </>
   )
