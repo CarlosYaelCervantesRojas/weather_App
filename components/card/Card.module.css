@@ -29,3 +29,15 @@
     font-size: 16px;
     font-weight: 500;
 }
+.lastchild{
+    color: #A09FB1;
+}
+
+@media (min-width: 1000px) {
+    .cardContainer{
+        width: 120px;
+    }
+    .deegres{
+        width: 70%;
+    }
+}

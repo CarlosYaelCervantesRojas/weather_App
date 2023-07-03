@@ -19,3 +19,9 @@
     font-size: 64px;
     font-weight: 700;
 }
+
+@media (min-width: 1000px) {
+    .highContainer{
+        width: 48%;
+    }
+}
