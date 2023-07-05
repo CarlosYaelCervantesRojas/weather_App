@@ -1,30 +1,27 @@
-'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
 import Card from '@/components/card/Card'
 import High from '@/components/high/High'
-import { useState } from 'react'
 import Search from '@/components/search/Search'
 
-export default function Home() {
+const API_Key = '608aa8411698ca2511927838a7977ba2'
+const today = new Date().toDateString()
+const arrToday = today.split(' ')
 
-  const [botonState, setBotonState] = useState(false)
+const getData = async () => {
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=19.0386&lon=-98.196&appid=${API_Key}&units=metric`
+  const res = await fetch(url)
+  const data = await res.json()
+  return data
+}
 
-  function showSearch() {
-    setBotonState(!botonState)
-  }
+export default async function Home() {
+  const data = await getData()
 
   return (
     <main className={styles.allSection}>
       <section className={styles.secPrincipal}>
-        {
-          botonState ?
-            <Search onClick={showSearch} />
-            :
-            <button type='button' className={styles.botonSearch} onClick={showSearch}>
-              Search for places
-            </button>
-        }
+        <Search />
         <div className={styles.imgContainer}>
           <Image
             src={'/my_location_FILL1_wght400_GRAD0_opsz48.svg'}
@@ -36,18 +33,18 @@ export default function Home() {
         <div className={styles.clouds}></div>
         <div className={styles.weaImg}>
           <Image
-            src={'/weather-app-master/Shower.png'}
-            height={234}
-            width={202}
+            src={`/weather-app-master/${data.weather[0].icon}.png`}
+            fill
+            style={{objectFit: 'contain'}}
             alt='weather'
           />
         </div>
         <div className={styles.info}>
           <div className={styles.temp}>
-            <h1>15</h1><p>°C</p>
+            <h1>{Math.round(data.main.temp)}</h1><p>°C</p>
           </div>
-          <h3>Shower</h3>
-          <span>Today • Fri, 5 Jun</span>
+          <h3>{data.weather[0].description}</h3>
+          <span>Today • {arrToday[0]}, {Math.round(arrToday[2])} {arrToday[1]}</span>
           <div className={styles.location}>
             <Image
               src={'/location_on_FILL1_wght300_GRAD0_opsz48.svg'}
@@ -55,7 +52,7 @@ export default function Home() {
               height={24}
               alt='Location'
             />
-            <span>Helsinki</span>
+            <span>{data.name}</span>
           </div>
         </div>
       </section>
@@ -64,19 +61,12 @@ export default function Home() {
 
         <section className={styles.secCards}>
           <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
         </section>
 
         <section className={styles.secHigh}>
           <h4>Today&#8217;s Hightlights</h4>
           <div className={styles.highCards}>
-            <High />
-            <High />
-            <High />
-            <High />
+            <High high={data} />
           </div>
         </section>
       </div>
